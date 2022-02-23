@@ -1,32 +1,27 @@
-def gv
 
 pipeline {
     agent any
     tools {
         maven 'maven'
     }
-    
     stages {
-        stage("init") {
+        stage("test") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "testing"
+                    echo "testing the application for branch $BRANCH_NAME"
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    echo "building jar"
-                    gv.buildJar()
+        stage("build ") {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
                 }
             }
-        }
-        stage("build image") {
             steps {
                 script {
-                    echo "building image"
-                    gv.buildImage()
+                    echo "building the application for branch $BRANCH_NAME"
                 }
             }
         }
@@ -34,7 +29,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    gv.deployApp()
+                    echo "deploying the application for branch $BRANCH_NAME"
                 }
             }
         }
