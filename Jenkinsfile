@@ -14,15 +14,20 @@ pipeline {
             steps {
                 script {
                     echo "building jar"
-                    //gv.buildJar()
+                    buildjar()
                 }
             }
         }
         stage("build image") {
+        when {
+        expression {
+        BRANCH_NAME == 'jenkins-jobs'
+        }
+        }
             steps {
                 script {
                     echo "building image"
-                    //gv.buildImage()
+                    buildimage 'sujadocker14/java-maven-app:jma-1.0'
                 }
             }
         }
@@ -30,7 +35,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    //gv.deployApp()
+                    gv.deployApp()
                 }
             }
         }
