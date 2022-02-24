@@ -26,7 +26,11 @@ pipeline {
         stage("build image") {
             steps {
                 script {
+<<<<<<< HEAD
                    buildimage 'sujadocker14/java-maven-app:jma-1.0'
+=======
+                   buildimage()
+>>>>>>> e40b951d51045fc40307f19290842c22b2b38cd8
                 }
             }
         }
@@ -34,7 +38,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    //gv.deployApp()
+                    gv.deployApp()
                 }
             }
         }
