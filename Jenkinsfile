@@ -13,15 +13,11 @@ pipeline {
                 }
             }
         }
-        stage("build ") {
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
+        stage("build") {
             steps {
                 script {
                     echo "building the application for branch $BRANCH_NAME"
+                    buildjar()
                 }
             }
         }
