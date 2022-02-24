@@ -14,26 +14,22 @@ pipeline {
             }
         }
         stage("build jar") {
-            when {
-                expression {
-                    BRANCH_NAME == 'jenkins-jobs'
-                }
-            }
             steps {
                 script {
-                   gv.buildJar()
+                    echo "Building jar file"
+                       sh 'mvn package'
                 }
             }
         }
         stage("build image") {
-                    when {
-                        expression {
-                            BRANCH_NAME == 'jenkins-jobs'
-                        }
-                    }
             steps {
                 script {
-                    gv.buildImage()
+                   echo "building docker image "
+                       withCredentials([usernamePassword(credentialsId: 'dockerHub_credentials', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                           sh "docker build -t sujadocker14/java-maven-app:test-1.0 ."
+                           sh "echo $pass | docker login -u $user --password-stdin"
+                           sh 'docker push sujadocker14/java-maven-app:test-1.0 '
+                       }
 
                 }
             }
@@ -42,7 +38,6 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    gv.deployApp()
                 }
             }
         }
