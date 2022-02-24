@@ -26,7 +26,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                   buildimage()
+                   buildimage 'sujadocker14/java-maven-app:jma-1.0'
                 }
             }
         }
