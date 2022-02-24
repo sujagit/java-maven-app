@@ -6,13 +6,20 @@ pipeline {
     maven 'maven'
     }
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
+    stage("init") {
+                steps {
+                    script {
+                        gv = load "script.groovy"
+                    }
                 }
             }
-        }
+            stage("test") {
+                        steps {
+                            script {
+                               echo "testing application"
+                            }
+                        }
+                    }
         stage("build jar") {
         when {
                 expression {
@@ -21,7 +28,7 @@ pipeline {
                 }
             steps {
                 script {
-                    echo "building jar"
+                    echo "building jar "
                     gv.buildJar()
                 }
             }
