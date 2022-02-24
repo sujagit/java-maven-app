@@ -14,6 +14,11 @@ pipeline {
             }
         }
         stage("build jar") {
+        when {
+                expression {
+                BRANCH_NAME == 'jenkins-jobs'
+                }
+                }
             steps {
                 script {
                     echo "building jar"
