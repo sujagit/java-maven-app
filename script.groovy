@@ -1,5 +1,5 @@
 def buildJar() {
-    echo "Building jar file for $BRANCH_NAME"
+    echo "Building jar file for .."
     sh 'mvn package'
 }
 def deployApp() {
