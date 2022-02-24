@@ -33,8 +33,8 @@ pipeline {
                     }
             steps {
                 script {
-                    echo "building image"
-                    //buildimage 'sujadocker14/java-maven-app:jma-1.0'
+                    gv.buildImage()
+
                 }
             }
         }
