@@ -9,12 +9,14 @@ pipeline {
         stage ("increment version") {
             steps {
                 script {
-                    echo 'incrementing app version'
-                    sh "mvn build-helper:parse-version versions:set\
-                                               -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit"
-                 def matcher = readFile('pom.xml') =~ '<version>(.+)<version>'
-                 def version = matcher [0][1]
-                 env.image_name = "$version-$BUILD_NUMBER"
+                    echo 'incrementing app version...'
+                                        sh 'mvn build-helper:parse-version versions:set \
+                                            -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                                            versions:commit'
+                                        def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                                        def version = matcher[0][1]
+                                        env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+
                 }
             }
         }
@@ -30,11 +32,12 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                   echo "building docker image "
-                       withCredentials([usernamePassword(credentialsId: 'dockerHub_credentials', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                           sh "docker build -t sujadocker14/java-maven-app:${image_name} ."
-                           sh "echo $pass | docker login -u $user --password-stdin"
-                           sh "docker push sujadocker14/java-maven-app:${image_name} "
+                      echo "building the docker image..."
+                                       withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                                           sh "docker build -t sujadocker14/java-maven-app:${IMAGE_NAME} ."
+                                           sh "echo $PASS | docker login -u $USER --password-stdin"
+                                           sh "docker push sujadocker14/java-maven-app:${IMAGE_NAME}"
+
                        }
 
                 }
