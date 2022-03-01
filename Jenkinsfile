@@ -43,10 +43,14 @@ pipeline {
                 }
             }
         }
-        stage("deploy") {
+        stage("deploy to Ec2 server") {
             steps {
                 script {
-                    echo "deploying"
+                   sshagent(['ec2Server']) {
+                     def dockerCmd = 'docker run -d -p 3000:3080 sujadocker14/react-nodejs-app:1.0 '
+                     sh "ssh -o StrictHostKeyChecking=no ec2-user@54.198.183.80 $(dockerCmd)"
+
+                   }
                 }
             }
         }
