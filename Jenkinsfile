@@ -44,6 +44,7 @@ pipeline {
             steps {
                 script {
                     echo 'deploy to ec2 server'
+                     //gv.deployApp()
 
                }
            }
@@ -52,7 +53,7 @@ pipeline {
                     steps {
                         script {
                             echo ' commit new version'
-
+                            gv.commitNewVersion()
                         }
                     }
         }
