@@ -19,6 +19,7 @@ pipeline {
             steps {
                 script {
                     echo 'incrementing application version'
+                    gv.incrementVersion()
                 }
             }
         }
