@@ -33,9 +33,8 @@ pipeline {
             steps {
                 script {
                     echo 'deploy'
-                   }
-                }
-            }
+               }
+           }
         }
         stage('commit version update') {
                     steps {
@@ -45,5 +44,6 @@ pipeline {
                         }
                     }
         }
-    }   
+    }
 }
+
