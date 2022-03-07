@@ -5,8 +5,8 @@ def incrementVersion()
                                             versions:commit'
     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
     def version = matcher[0][1]
-    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
-    env.IMAGE = "sujadocker14/java-maven-app:${IMAGE_NAME}"
+    env.IMAGE_TAG = "$version-$BUILD_NUMBER"
+    env.IMAGE = "sujadocker14/java-maven-app:${IMAGE_TAG}"
 
 }
 def buildJar() {
