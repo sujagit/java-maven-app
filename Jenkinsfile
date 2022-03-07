@@ -43,7 +43,7 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    echo 'deploy to ec2 server'
+                    echo 'deploy docker image to ec2 server'
                      gv.deployApp()
 
                }
