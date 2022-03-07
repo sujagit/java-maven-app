@@ -6,6 +6,7 @@ def incrementVersion()
     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
     def version = matcher[0][1]
     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+    env.IMAGE = "sujadocker14/java-maven-app:${IMAGE_NAME}"
 
 }
 def buildJar() {
@@ -15,16 +16,18 @@ def buildJar() {
 def buildImage() {
     echo "building image ..."
     withCredentials([usernamePassword(credentialsId: 'dockerHub_credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh "docker build -t sujadocker14/java-maven-app:${IMAGE_NAME} ."
+        sh "docker build -t ${IMAGE} ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker push sujadocker14/java-maven-app:${IMAGE_NAME}"
+        sh "docker push ${IMAGE}"
     }
 }
 def deployApp() {
     echo 'deploying the application...'
     //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app sujadocker14/java-maven-app:${IMAGE_NAME} "
-    def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
+    //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
+    def shellCmd = "bash ./servercommand.sh ${IMAGE}"
     sshagent(['Ec2-server-ssh']) {
+        sh "scp server-command.sh ec2-user@54.172.66.25:/home/ec2-user"
         sh "scp docker-compose.yaml ec2-user@54.172.66.25:/home/ec2-user"
         sh "ssh -o StrictHostKeyChecking=no ec2-user@54.172.66.25 ${dockerCmd}"
 
