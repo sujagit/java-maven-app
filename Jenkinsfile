@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     echo 'deploy to ec2 server'
-                     gv.deployApp()
+                     //gv.deployApp()
 
                }
            }
