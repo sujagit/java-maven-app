@@ -18,7 +18,7 @@ pipeline {
         stage ("increment version") {
             steps {
                 script {
-                    echo 'incrementing application version'
+                    echo 'Incrementing the application version'
                     gv.incrementVersion()
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    echo "Building jar file"
+                    echo "Building Jar file"
                     gv.buildJar()
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
         stage('build image') {
             steps {
                 script {
-                      echo "building the docker image..."
+                      echo 'Building Docker Image and pushed to Docker Hub'
                       gv.buildImage()
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    echo 'deploy docker image to ec2 server'
+                    echo 'Docker Imaged Deployed to EC2 Server Instance'
                      gv.deployApp()
 
                }
@@ -52,7 +52,7 @@ pipeline {
         stage('commit version update') {
                     steps {
                         script {
-                            echo ' commit new version'
+                            echo 'New version commited in GitHub'
                             gv.commitNewVersion()
                         }
                     }

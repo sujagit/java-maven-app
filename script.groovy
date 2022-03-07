@@ -10,11 +10,9 @@ def incrementVersion()
 
 }
 def buildJar() {
-    echo "Building jar file for .."
     sh 'mvn package'
 }
 def buildImage() {
-    echo "building image ..."
     withCredentials([usernamePassword(credentialsId: 'dockerHub_credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh "docker build -t ${IMAGE} ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
@@ -22,7 +20,6 @@ def buildImage() {
     }
 }
 def deployApp() {
-    echo 'deploying the application...'
     //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
     //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
     def shellCmd = "bash ./server-commands.sh ${IMAGE}"
