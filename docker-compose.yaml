@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   java-maven-app:
-    image: sujadocker14/java-maven-app:${IMAGE_NAME}
+    image: sujadocker14/java-maven-app:1.0.9-11
     ports:
       - 8080:8080
   postgres:
