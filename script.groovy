@@ -25,7 +25,7 @@ def deployApp() {
     echo 'deploying the application...'
     //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
     //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
-    def shellCmd = "bash ./servercommands.sh ${IMAGE}"
+    def shellCmd = "bash ./server-commands.sh ${IMAGE}"
     sshagent(['Ec2-server-ssh']) {
         sh "scp server-commands.sh ec2-user@54.172.66.25:/home/ec2-user"
         sh "scp docker-compose.yaml ec2-user@54.172.66.25:/home/ec2-user"
