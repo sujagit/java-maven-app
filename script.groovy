@@ -19,6 +19,7 @@ def buildImage() {
         sh "docker push ${IMAGE}"
     }
 }
+
 def deployApp() {
     //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
     //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
