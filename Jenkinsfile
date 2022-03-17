@@ -36,7 +36,8 @@ pipeline {
             steps {
                 script {
                       echo 'Building Docker Image and pushed to Docker Hub'
-                      gv.buildImage()
+                     // gv.buildImage()
+                     gv.pushImagetoECR()
                 }
             }
         }
@@ -44,7 +45,7 @@ pipeline {
             steps {
                 script {
                     echo 'Docker Imaged Deployed to EC2 Server Instance'
-                     gv.deployApp()
+                     //gv.deployApp()
 
                }
            }

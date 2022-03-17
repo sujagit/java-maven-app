@@ -7,6 +7,7 @@ def incrementVersion()
     def version = matcher[0][1]
     env.IMAGE_TAG = "$version-$BUILD_NUMBER"
     env.IMAGE = "sujadocker14/java-maven-app:${IMAGE_TAG}"
+    env.ecrIMAGE = "079537524733.dkr.ecr.us-east-1.amazonaws.com/java-maven-app:${IMAGE_TAG}"
 
 }
 def buildJar() {
@@ -19,7 +20,13 @@ def buildImage() {
         sh "docker push ${IMAGE}"
     }
 }
-
+def pushImagetoECR() {
+    withCredentials([usernamePassword(credentialsId: 'ecr_credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh "docker build -t ${ecrIMAGE} ."
+        sh "echo $PASS | docker login -u $USER --password-stdin 079537524733.dkr.ecr.us-east-1.amazonaws.com"
+        sh "docker push ${ecrIMAGE}"
+    }
+}
 def deployApp() {
     //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
     //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
