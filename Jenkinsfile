@@ -46,6 +46,7 @@ pipeline {
                 script {
                     echo 'Docker Imaged Deployed to EC2 Server Instance'
                      //gv.deployApp()
+                     gv.deployAppfromECR()
 
                }
            }
@@ -55,6 +56,7 @@ pipeline {
                         script {
                             echo 'New version commited in GitHub'
                             gv.commitNewVersion()
+
                         }
                     }
         }

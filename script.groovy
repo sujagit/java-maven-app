@@ -40,6 +40,16 @@ def deployApp() {
     }
 }
 
+def deployAppfromECR() {
+    def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${ecrIMAGE} "
+    def ec2Instance = "ec2-user@34.230.82.30"
+    sshagent(['aws-ec2-ssh']) {
+
+        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerCmd}"
+
+    }
+}
+
 def commitNewVersion() {
     withCredentials([usernamePassword(credentialsId: 'gitCredentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         // git config here for the first time run
