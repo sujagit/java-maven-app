@@ -20,14 +20,14 @@ def buildImage() {
     }
 }
 def deployApp() {
-    def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
+    //def dockerCmd = "docker run -d -p 8080:8080 --name java-maven-app ${IMAGE} "
     //def dockerCmd = " docker-compose -f docker-compose.yaml up --detach"
-    //def shellCmd = "bash ./server-commands.sh ${IMAGE}"
+    def shellCmd = "bash ./server-commands.sh ${IMAGE}"
     def ec2Instance = "ec2-user@34.230.82.30"
     sshagent(['aws-ec2-ssh']) {
         //sh "scp server-commands.sh ${ec2Instance}:/home/ec2-user"
         //sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
-        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerCmd}"
+        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
 
     }
 }
