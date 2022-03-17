@@ -27,7 +27,7 @@ def deployApp() {
     sshagent(['ec2-ssh-key']) {
         sh "scp server-commands.sh ${ec2Instance}:/home/ec2-user"
         sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
-        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerCmd}"
 
     }
 }
