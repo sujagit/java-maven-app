@@ -42,11 +42,17 @@ pipeline {
             }
         }
         stage('deploy') {
+        environment {
+                 AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+                 AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+                 APP_NAME = 'java-maven-app'
+        }
             steps {
                 script {
                     echo 'Docker Imaged Deployed to EC2 Server Instance'
                      //gv.deployApp()
-                     gv.deployAppfromECR()
+                     //gv.deployAppfromECR()
+                     gv.deployToKn8sNode()
 
                }
            }

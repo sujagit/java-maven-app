@@ -50,6 +50,12 @@ def deployAppfromECR() {
     }
 }
 
+def deployToKn8sNode() {
+    sh 'envsubst < deployment.yaml | kubectl apply -f -'
+    sh 'envsubst < service.yaml | kubectl apply -f -'
+}
+
+
 def commitNewVersion() {
     withCredentials([usernamePassword(credentialsId: 'gitCredentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         // git config here for the first time run
